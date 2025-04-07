@@ -1,0 +1,6 @@
+
+- name: Install Amass
+  apt:
+    name: amass
+    state: present
+    update_cache: true

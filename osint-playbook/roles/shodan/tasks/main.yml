@@ -1,0 +1,4 @@
+
+- name: Install Shodan CLI via pip
+  pip:
+    name: shodan

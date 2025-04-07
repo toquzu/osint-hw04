@@ -1,0 +1,9 @@
+
+- name: Clone theHarvester
+  git:
+    repo: 'https://github.com/laramies/theHarvester.git'
+    dest: /opt/osint/theHarvester
+
+- name: Install theHarvester dependencies
+  pip:
+    requirements: /opt/osint/theHarvester/requirements.txt

@@ -1,0 +1,12 @@
+
+- name: Download and install Subfinder
+  shell: |
+    curl -s https://api.github.com/repos/projectdiscovery/subfinder/releases/latest \
+    | grep "browser_download_url.*linux_amd64" \
+    | cut -d '"' -f 4 \
+    | wget -qi - -O subfinder.zip
+    unzip -o subfinder.zip
+    chmod +x subfinder
+    mv subfinder /usr/local/bin/
+  args:
+    chdir: /opt/osint

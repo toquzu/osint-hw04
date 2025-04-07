@@ -1,0 +1,4 @@
+
+- name: Install TruffleHog via pip
+  pip:
+    name: truffleHog

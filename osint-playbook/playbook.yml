@@ -1,0 +1,11 @@
+---
+- name: Install OSINT tools using roles
+  hosts: localhost
+  become: true
+
+  roles:
+    - { role: amass, tags: amass }
+    - { role: theharvester, tags: theharvester }
+    - { role: subfinder, tags: subfinder }
+    - { role: shodan, tags: shodan }
+    - { role: trufflehog, tags: trufflehog }
