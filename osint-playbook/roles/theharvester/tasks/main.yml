@@ -1,41 +1,25 @@
----
-- name: Install Python 3 venv package
-  apt:
-    name: python3-venv
-    state: present
 
-- name: Install pip for Python 3
-  apt:
-    name: python3-pip
-    state: present
+- name: Install theHarvester via apt
+  hosts: localhost
+  become: true
+  connection: local
 
-- name: Clone theHarvester repository
-  git:
-    repo: 'https://github.com/laramies/theHarvester.git'
-    dest: /opt/osint/theHarvester
+  tasks:
+    - name: Update apt repository cache
+      apt:
+        update_cache: yes
 
-- name: Create virtual environment for theHarvester
-  pip:
-    name: virtualenv
-    executable: /usr/bin/python3
-    state: present
+    - name: Install theHarvester
+      apt:
+        name: theharvester
+        state: present
 
-- name: Create virtual environment for theHarvester
-  command: /usr/bin/python3 -m venv /opt/osint/theHarvester/venv
-  creates: /opt/osint/theHarvester/venv
+    - name: Verify theHarvester installation
+      command: theHarvester -h
+      register: theharvester_output
+      failed_when: theharvester_output.rc != 0
+      changed_when: false
 
-- name: Install theHarvester dependencies in virtual environment
-  pip:
-    requirements: /opt/osint/theHarvester/requirements.txt
-    virtualenv: /opt/osint/theHarvester/venv
-    executable: /opt/osint/theHarvester/venv/bin/pip
-
-- name: Verify theHarvester installation
-  command: /opt/osint/theHarvester/venv/bin/python3 /opt/osint/theHarvester/theHarvester.py --help
-  register: theharvester_output
-  failed_when: theharvester_output.rc != 0
-  changed_when: false
-
-- name: Output theHarvester version
-  debug:
-    msg: "{{ theharvester_output.stdout }}"
+    - name: Output theHarvester version
+      debug:
+        msg: "{{ theharvester_output.stdout }}"
