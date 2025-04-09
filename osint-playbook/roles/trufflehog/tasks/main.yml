@@ -13,15 +13,11 @@
         repo: 'https://github.com/dxa4481/truffleHog.git'
         dest: /opt/truffleHog
 
-    # Переходим в директорию с TruffleHog
-    - name: Navigate to TruffleHog directory
-      command: chdir=/opt/truffleHog
-
     # Выполняем установку TruffleHog, если это нужно (например, сборка)
     - name: Run TruffleHog setup manually (if needed)
-      command: python3 setup.py install
-      chdir: /opt/truffleHog
-      ignore_errors: yes
+      command:
+        cmd: python3 setup.py install
+        chdir: /opt/truffleHog
 
     # Проверяем установку TruffleHog
     - name: Verify TruffleHog installation
