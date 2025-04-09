@@ -15,3 +15,6 @@
 ```bash
 git clone https://github.com/toquzu/osint-playbook.git
 cd osint-playbook
+```
+
+```bash
