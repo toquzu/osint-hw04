@@ -1,9 +1,36 @@
 
-- name: Install python3-pip using apt
-  apt:
-    name: python3-pip
-    state: present
-    
-- name: Install TruffleHog via pip
-  pip:
-    name: truffleHog
+    - name: Install git and build dependencies via apt
+      apt:
+        name:
+          - git
+          - build-essential
+        state: present
+        update_cache: yes
+
+    # Клонируем репозиторий TruffleHog из GitHub
+    - name: Clone the TruffleHog repository
+      git:
+        repo: 'https://github.com/dxa4481/truffleHog.git'
+        dest: /opt/truffleHog
+
+    # Переходим в директорию с TruffleHog
+    - name: Navigate to TruffleHog directory
+      command: chdir=/opt/truffleHog
+
+    # Выполняем установку TruffleHog, если это нужно (например, сборка)
+    - name: Run TruffleHog setup manually (if needed)
+      command: python3 setup.py install
+      chdir: /opt/truffleHog
+      ignore_errors: yes
+
+    # Проверяем установку TruffleHog
+    - name: Verify TruffleHog installation
+      command: /opt/truffleHog/trufflehog --help
+      register: trufflehog_output
+      failed_when: trufflehog_output.rc != 0
+      changed_when: false
+
+    # Выводим результат установки
+    - name: Output TruffleHog help
+      debug:
+        msg: "{{ trufflehog_output.stdout }}"
