@@ -9,11 +9,11 @@
       command: pipx install shodan --include-deps
 
     - name: Verify Shodan installation
-      command: shodan --version
+      command: shodan --help
       register: shodan_output
       failed_when: shodan_output.rc != 0
       changed_when: false
 
-    - name: Output Shodan version
+    - name: Output Shodan help
       debug:
         msg: "{{ shodan_output.stdout }}"
