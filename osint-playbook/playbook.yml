@@ -1,6 +1,6 @@
 ---
 - name: Install OSINT tools using roles
-  hosts: localhost
+  hosts: all
   become: true
 
   roles:
