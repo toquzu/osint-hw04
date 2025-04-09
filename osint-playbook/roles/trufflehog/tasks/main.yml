@@ -14,6 +14,3 @@
       failed_when: trufflehog_output.rc != 0
       changed_when: false
 
-    - name: Output TruffleHog version
-      debug:
-        msg: "{{ trufflehog_output.stdout }}"
