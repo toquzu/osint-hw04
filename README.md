@@ -18,3 +18,5 @@ cd osint-playbook
 ```
 
 ```bash
+apt-cache policy amass theharvest subfinder shodan trufllehog
+```
