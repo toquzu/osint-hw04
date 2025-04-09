@@ -1,26 +1,19 @@
 
-    - name: Install git and build dependencies via apt
+    - name: Update apt cache
       apt:
-        name:
-          - git
-          - build-essential
-        state: present
         update_cache: yes
 
-    # Клонируем репозиторий TruffleHog из GitHub
-    - name: Clone the TruffleHog repository
-      git:
-        repo: 'https://github.com/dxa4481/truffleHog.git'
-        dest: /opt/truffleHog
+    - name: Install TruffleHog via APT
+      apt:
+        name: trufflehog
+        state: present
 
-    # Проверяем наличие исполнимого файла в клонированной директории
-    - name: Verify if trufflehog is available
-      command: /opt/truffleHog/trufflehog --help
+    - name: Verify TruffleHog installation
+      command: trufflehog --help
       register: trufflehog_output
       failed_when: trufflehog_output.rc != 0
       changed_when: false
 
-    # Выводим результат проверки
     - name: Output TruffleHog help
       debug:
         msg: "{{ trufflehog_output.stdout }}"
