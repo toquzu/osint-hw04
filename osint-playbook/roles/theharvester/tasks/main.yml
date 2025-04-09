@@ -1,9 +1,35 @@
+---
+- name: Install Python 3 venv package
+  apt:
+    name: python3-venv
+    state: present
 
-- name: Clone theHarvester
+- name: Install pip for Python 3
+  apt:
+    name: python3-pip
+    state: present
+
+- name: Clone theHarvester repository
   git:
     repo: 'https://github.com/laramies/theHarvester.git'
     dest: /opt/osint/theHarvester
 
-- name: Install theHarvester dependencies
+- name: Create virtual environment for theHarvester
+  command: python3 -m venv /opt/osint/theHarvester/venv
+  creates: /opt/osint/theHarvester/venv
+
+- name: Install theHarvester dependencies in virtual environment
   pip:
     requirements: /opt/osint/theHarvester/requirements.txt
+    virtualenv: /opt/osint/theHarvester/venv
+    executable: /opt/osint/theHarvester/venv/bin/pip
+
+- name: Verify theHarvester installation
+  command: /opt/osint/theHarvester/venv/bin/python3 /opt/osint/theHarvester/theHarvester.py --help
+  register: theharvester_output
+  failed_when: theharvester_output.rc != 0
+  changed_when: false
+
+- name: Output theHarvester version
+  debug:
+    msg: "{{ theharvester_output.stdout }}"
