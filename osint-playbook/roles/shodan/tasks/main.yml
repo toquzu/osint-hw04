@@ -1,22 +1,19 @@
 
-- name: Install pipx using apt
+    - name: Install pipx using apt
       apt:
         name: pipx
         state: present
         update_cache: yes
 
-    # Устанавливаем Shodan CLI с помощью pipx
-    - name: Install Shodan CLI via pipx
+    - name: Install Shodan using pipx
       command: pipx install shodan
 
-    # Проверяем установку Shodan CLI
-    - name: Verify Shodan CLI installation
-      command: /home/{{ ansible_user }}/.local/bin/shodan --help
+    - name: Verify Shodan installation
+      command: shodan --help
       register: shodan_output
       failed_when: shodan_output.rc != 0
       changed_when: false
 
-    # Выводим результат установки
-    - name: Output Shodan CLI help
+    - name: Output Shodan help
       debug:
         msg: "{{ shodan_output.stdout }}"
