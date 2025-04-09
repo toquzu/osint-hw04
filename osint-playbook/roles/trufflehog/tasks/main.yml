@@ -9,11 +9,11 @@
         state: present
 
     - name: Verify TruffleHog installation
-      command: trufflehog --help
+      command: trufflehog --version
       register: trufflehog_output
       failed_when: trufflehog_output.rc != 0
       changed_when: false
 
-    - name: Output TruffleHog help
+    - name: Output TruffleHog version
       debug:
         msg: "{{ trufflehog_output.stdout }}"
