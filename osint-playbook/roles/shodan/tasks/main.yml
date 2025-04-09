@@ -1,4 +1,10 @@
 
+- name: Install python3-pip using apt
+  apt:
+    name: python3-pip
+    state: present
+
 - name: Install Shodan CLI via pip
   pip:
     name: shodan
+    executable: /usr/bin/pip3
