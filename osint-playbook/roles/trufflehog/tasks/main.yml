@@ -13,15 +13,9 @@
         repo: 'https://github.com/dxa4481/truffleHog.git'
         dest: /opt/truffleHog
 
-    # Устанавливаем зависимости из requirements.txt
-    - name: Install dependencies for TruffleHog
-      pip:
-        requirements: /opt/truffleHog/requirements.txt
-        executable: /usr/bin/pip3
-
-    # Проверяем доступность TruffleHog через Python
-    - name: Run TruffleHog via Python
-      command: python3 /opt/truffleHog/trufflehog --help
+    # Проверяем наличие исполнимого файла в клонированной директории
+    - name: Verify if trufflehog is available
+      command: /opt/truffleHog/trufflehog --help
       register: trufflehog_output
       failed_when: trufflehog_output.rc != 0
       changed_when: false
