@@ -6,7 +6,7 @@
         update_cache: yes
 
     - name: Install Shodan using pipx
-      command: pipx install shodan
+      command: pipx install shodan --include-deps
 
     - name: Verify Shodan installation
       command: shodan --help
