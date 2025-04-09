@@ -15,7 +15,13 @@
     dest: /opt/osint/theHarvester
 
 - name: Create virtual environment for theHarvester
-  command: python3 -m venv /opt/osint/theHarvester/venv
+  pip:
+    name: virtualenv
+    executable: /usr/bin/python3
+    state: present
+
+- name: Create virtual environment for theHarvester
+  command: /usr/bin/python3 -m venv /opt/osint/theHarvester/venv
   creates: /opt/osint/theHarvester/venv
 
 - name: Install theHarvester dependencies in virtual environment
