@@ -1,19 +1,17 @@
 
-    - name: Install python3-pip using apt
+- name: Install pipx using apt
       apt:
-        name: python3-pip
+        name: pipx
         state: present
         update_cache: yes
 
-    # Устанавливаем Shodan CLI с помощью pip3
-    - name: Install Shodan CLI via pip
-      pip:
-        name: shodan
-        executable: /usr/bin/pip3
+    # Устанавливаем Shodan CLI с помощью pipx
+    - name: Install Shodan CLI via pipx
+      command: pipx install shodan
 
     # Проверяем установку Shodan CLI
     - name: Verify Shodan CLI installation
-      command: /usr/bin/shodan --help
+      command: /home/{{ ansible_user }}/.local/bin/shodan --help
       register: shodan_output
       failed_when: shodan_output.rc != 0
       changed_when: false
