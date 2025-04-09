@@ -1,25 +1,5 @@
 
 - name: Install theHarvester via apt
-  hosts: localhost
-  become: true
-  connection: local
-
-  tasks:
-    - name: Update apt repository cache
-      apt:
-        update_cache: yes
-
-    - name: Install theHarvester
-      apt:
-        name: theharvester
-        state: present
-
-    - name: Verify theHarvester installation
-      command: theHarvester -h
-      register: theharvester_output
-      failed_when: theharvester_output.rc != 0
-      changed_when: false
-
-    - name: Output theHarvester version
-      debug:
-        msg: "{{ theharvester_output.stdout }}"
+  apt:
+    name: theharvester
+    state: present
